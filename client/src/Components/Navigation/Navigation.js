@@ -1,7 +1,12 @@
 import React from "react";
 import "./Navigations.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 const Navigation = () => {
+    const history = useHistory();
+    const logOut = () => {
+        localStorage.removeItem("token");
+        history.push("/login");
+    };
     return (
         <div class="page-header navbar navbar-fixed-top">
             <div class="page-header-inner">
@@ -64,7 +69,7 @@ const Navigation = () => {
                                     <li class="divider"></li>
 
                                     <li>
-                                        <a id="logout-form">
+                                        <a id="logout-form" onClick={logOut}>
                                             <i class="icon-logout"></i> Logout{" "}
                                         </a>
                                     </li>
@@ -79,11 +84,11 @@ const Navigation = () => {
                     <div class="hor-menu ">
                         <ul class="nav navbar-nav">
                             <li class="nav-item  start  active">
-                                <a class="nav-link" href=" ">
+                                <Link class="nav-link" to="/dashboardA">
                                     <i class="icon-home"></i>
                                     <span class="title">Dashboard</span>
                                     <span class="selected"></span>
-                                </a>
+                                </Link>
                             </li>
 
                             <li class="menu-dropdown classic-menu-dropdown ">
@@ -176,32 +181,41 @@ const Navigation = () => {
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
+                                        <Link
+                                            class="nav-link"
+                                            to="/AdminMarkAttendance"
+                                        >
                                             <i class="fa  fa-check"></i>
                                             Mark Attendance
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
+                                        <Link
+                                            class="nav-link"
+                                            to="/adminViewAttendance"
+                                        >
                                             <i class="fa fa-eye"></i>
                                             View Attendance
-                                        </a>
+                                        </Link>
                                     </li>
-                                    <li class="nav-item ">
+                                    {/* <li class="nav-item ">
                                         <a class="nav-link" href=" ">
                                             <i class="fa fa-sitemap"></i>
                                             Leave Types
                                         </a>
-                                    </li>
+                                    </li> */}
 
                                     <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
+                                        <Link
+                                            class="nav-link"
+                                            to="/AdminLeaveList"
+                                        >
                                             <i class="fa fa-rocket"></i>
                                             <span class="title">
                                                 Leave List
                                             </span>
                                             <span class="selected "></span>
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </li>

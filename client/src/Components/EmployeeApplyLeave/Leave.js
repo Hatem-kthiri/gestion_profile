@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import "./style.css";
+import jwt_decode from "jwt-decode";
+import { addLeave } from "../../redux/actions/Employee";
+import { useDispatch } from "react-redux";
 const Leave = () => {
-    const [newLeave, setNewLeave] = useState({});
+    const id = jwt_decode(localStorage.getItem("token")).user._id;
     const handleChange = (e) => {
         setNewLeave({ ...newLeave, [e.target.name]: e.target.value });
+    };
+    const dispatch = useDispatch();
+    const [newLeave, setNewLeave] = useState({ Employee: id });
+    const submitLeave = () => {
+        dispatch(addLeave(newLeave));
     };
 
     return (
         <div
             style={{
                 background: "white",
-                margin: "130px auto auto",
+                margin: "30px auto auto",
                 padding: "10px 20px",
                 width: "97%",
             }}
@@ -74,7 +82,11 @@ const Leave = () => {
                     ></textarea>
                 </div>
                 <div class="col-md-offset-4 col-md-8">
-                    <button type="submit" class="btn-u btn-u-sea">
+                    <button
+                        type="submit"
+                        class="btn-u btn-u-sea"
+                        onClick={submitLeave}
+                    >
                         <i class="fa fa-check"></i> Submit
                     </button>
                 </div>

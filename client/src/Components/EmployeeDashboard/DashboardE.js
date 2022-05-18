@@ -1,127 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+
 const DashboardE = () => {
+    const [userLogged, setUserLogged] = useState({});
+
+    useEffect(() => {
+        setUserLogged(jwt_decode(localStorage.getItem("token")).user);
+    }, []);
+    const [creationDate, setCreationDate] = useState("loading...");
+    setTimeout(() => {
+        setCreationDate(userLogged.creationDate.substr(0, 10));
+    }, 2000);
     return (
         <div class="wrapper">
-            <div class="header">
-                <div class="navbar navbar-default mega-menu" role="navigation">
-                    <div class="container">
-                        <div class="navbar-header">
-                            <button
-                                type="button"
-                                class="navbar-toggle"
-                                data-toggle="collapse"
-                                data-target=".navbar-responsive-collapse"
-                            >
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="fa fa-bars"></span>
-                            </button>
-                            <a class="navbar-brand" href="#">
-                                <img
-                                    src="https://hrm-saas.froid.works/assets/admin/layout/img/hrm-logo-full.png"
-                                    class="logo-default"
-                                    id="logo-header"
-                                    height="30px"
-                                    alt="Logo"
-                                />
-                            </a>
-                        </div>
-
-                        <div class="collapse navbar-collapse navbar-responsive-collapse">
-                            <ul class="nav navbar-nav">
-                                <li class="active">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="dropdown ">
-                                    <a
-                                        href=""
-                                        class="dropdown-toggle"
-                                        data-toggle="dropdown"
-                                    >
-                                        Leaves
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <Link to="EmployeeApplyLeave">
-                                                {" "}
-                                                Apply Leave
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <a href="#"> My Leaves</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                {/* <li class="dropdown ">
-                                    <a
-                                        href="javascript:void(0);"
-                                        class="dropdown-toggle"
-                                        data-toggle="dropdown"
-                                    >
-                                        Self{" "}
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://hrm-saas.froid.works/panel/salary">
-                                                {" "}
-                                                Salary Slips
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://hrm-saas.froid.works/panel/expenses">
-                                                {" "}
-                                                Expense Claims
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li> */}
-
-                                {/* <li class="">
-                                    <a href="https://hrm-saas.froid.works/panel/jobs">
-                                        Job Vacancies
-                                    </a>
-                                </li> */}
-
-                                <li class="">
-                                    <a href="https://hrm-saas.froid.works/panel/front/attendance">
-                                        Attendance
-                                    </a>
-                                </li>
-
-                                <li class="dropdown ">
-                                    <a
-                                        href=""
-                                        class="dropdown-toggle"
-                                        data-toggle="dropdown"
-                                    >
-                                        My Account
-                                    </a>
-
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a
-                                                href=""
-                                                data-toggle="modal"
-                                                data-target=".change_password_modal"
-                                                id="change_password_link"
-                                            >
-                                                {" "}
-                                                Change Password
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://hrm-saas.froid.works/panel/logout">
-                                                Logout
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="profile container content">
                 <div class="row">
                     <div class="col-md-3 md-margin-bottom-40 ">
@@ -136,13 +28,17 @@ const DashboardE = () => {
                         />
 
                         <p></p>
-                        <h3 class="text-center">Employee Example</h3>
-                        <h6 class="text-center">Fresher Android Developer</h6>
+                        <h3 class="text-center">{`${
+                            userLogged && userLogged.Name
+                        } ${userLogged && userLogged.lastName}`}</h3>
+                        <h6 class="text-center">
+                            {userLogged && userLogged.department}
+                        </h6>
                         <h6
                             class="service-block-u"
                             style={{ textAlign: "center", padding: "10px" }}
                         >
-                            <strong>At work for : </strong> 1 m 2 d
+                            <strong>Start work At : </strong> {creationDate}
                         </h6>
                         <p></p>
                         <hr />
@@ -202,7 +98,10 @@ const DashboardE = () => {
                                 <div class="col-sm-6">
                                     <div class="panel panel-profile no-bg">
                                         <div class="panel-heading overflow-h  service-block-u">
-                                            <h2 class="panel-title heading-sm pull-left">
+                                            <h2
+                                                class="panel-title heading-sm pull-left"
+                                                style={{ color: "#000" }}
+                                            >
                                                 <i class="fa fa-user"></i>
                                                 Personal Details
                                             </h2>
@@ -217,7 +116,10 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            Example Employee
+                                                            {`${
+                                                                userLogged &&
+                                                                userLogged.Name
+                                                            } `}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -226,7 +128,10 @@ const DashboardE = () => {
                                                                 Last Name
                                                             </span>
                                                         </td>
-                                                        <td>Malek</td>
+                                                        <td>{`${
+                                                            userLogged &&
+                                                            userLogged.lastName
+                                                        }`}</td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -234,7 +139,10 @@ const DashboardE = () => {
                                                                 Date of Birth
                                                             </span>
                                                         </td>
-                                                        <td>01-Jan-2000</td>
+                                                        <td>
+                                                            {userLogged &&
+                                                                userLogged.DateOfBirth}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -242,7 +150,10 @@ const DashboardE = () => {
                                                                 Gender
                                                             </span>
                                                         </td>
-                                                        <td>Male</td>
+                                                        <td>
+                                                            {userLogged &&
+                                                                userLogged.gender}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -251,7 +162,8 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            employee@example.com
+                                                            {userLogged &&
+                                                                userLogged.email}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -260,7 +172,10 @@ const DashboardE = () => {
                                                                 Phone
                                                             </span>
                                                         </td>
-                                                        <td>+21612345678</td>
+                                                        <td>
+                                                            {userLogged &&
+                                                                userLogged.phone}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -268,7 +183,10 @@ const DashboardE = () => {
                                                                 Local Address
                                                             </span>
                                                         </td>
-                                                        <td>Beja tunisia</td>
+                                                        <td>
+                                                            {userLogged &&
+                                                                userLogged.address}
+                                                        </td>
                                                     </tr>
                                                     {/* <tr>
                                                         <td>
@@ -291,7 +209,10 @@ const DashboardE = () => {
 
                                     <div class="panel panel-profile no-bg margin-top-20">
                                         <div class="panel-heading overflow-h service-block-u">
-                                            <h2 class="panel-title heading-sm pull-left">
+                                            <h2
+                                                class="panel-title heading-sm pull-left"
+                                                style={{ color: "#000" }}
+                                            >
                                                 <i class="fa fa-briefcase"></i>
                                                 Company Details
                                             </h2>
@@ -305,7 +226,10 @@ const DashboardE = () => {
                                                                 Employee ID
                                                             </span>
                                                         </td>
-                                                        <td>123456</td>
+                                                        <td>
+                                                            {userLogged &&
+                                                                userLogged._id}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -314,43 +238,18 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            Android Developer
+                                                            {userLogged &&
+                                                                userLogged.department}
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <span class="primary-link">
-                                                                Designation
-                                                            </span>
-                                                        </td>
-                                                        <td>
-                                                            Fresher Android
-                                                            Developer
-                                                        </td>
-                                                    </tr>
+
                                                     <tr>
                                                         <td>
                                                             <span class="primary-link">
                                                                 Date of Joining
                                                             </span>
                                                         </td>
-                                                        <td>10-Apr-2022</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <span class="primary-link">
-                                                                Salary ( TND )
-                                                            </span>
-                                                        </td>
-                                                        {/* <td>
-                                                            <p>
-                                                                Basic : 700 TND{" "}
-                                                            </p>
-                                                            <p>
-                                                                Hourly Rate : 8
-                                                                TND{" "}
-                                                            </p>
-                                                        </td> */}
+                                                        <td>{creationDate}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

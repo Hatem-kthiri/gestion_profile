@@ -9,6 +9,7 @@ const initialState = {
     user: {},
     isAuth: false,
     load: false,
+    role: "",
 };
 
 const userReducer = (state = initialState, action) => {
@@ -18,12 +19,12 @@ const userReducer = (state = initialState, action) => {
         //     return { ...state, user: payload.user, load: false, isAuth: false };
         case LOGIN_USER:
             localStorage.setItem("token", payload.token);
-            return { ...state, user: payload.user, load: false, isAuth: true };
+            return { ...state, load: false, isAuth: true, role: payload.role };
         case LOGOUT_USER:
             localStorage.removeItem("token");
-            return { ...state, user: {}, isAuth: false };
+            return { ...state, user: {}, isAuth: false, current: false };
         case CURRENT_USER:
-            return { ...state, user: payload.user, isAuth: true };
+            return { ...state, user: payload.user, currentV: true };
         default:
             return state;
     }

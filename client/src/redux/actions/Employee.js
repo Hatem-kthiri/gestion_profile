@@ -1,7 +1,8 @@
 import {
     GET_EMPLOYEE,
     GET_DEPARTMENT,
-    GET_POST_DETAIL,
+    GET_LEAVE,
+    GET_ATTENDANCE,
 } from "../constants/actions-types";
 import axios from "axios";
 
@@ -29,8 +30,59 @@ export const add_Department = (newDepartment) => async (dispatch) => {
             "api/addDepartment",
             newDepartment
         );
-        console.log(new_department);
+
         dispatch(get_Department());
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const getLeave = () => async (dispatch) => {
+    try {
+        let allLeaves = await axios.get("api/getLeave");
+
+        dispatch({ type: GET_LEAVE, payload: allLeaves.data });
+    } catch (err) {
+        console.log(err);
+    }
+};
+export const addLeave = (newLeave) => async (dispatch) => {
+    try {
+        let new_Leave = await axios.post("api/addLeave", newLeave);
+        console.log(new_Leave);
+        dispatch(getLeave());
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updateDecision =
+    ({ id, Decision }) =>
+    async (dispatch) => {
+        try {
+            let update_Decision = await axios.put(
+                `api/updateDecision/${id}`,
+                Decision
+            );
+            console.log(update_Decision);
+            dispatch(getLeave());
+        } catch (err) {
+            console.log(err);
+        }
+    };
+export const addAttendance = (attendance) => async (dispatch) => {
+    try {
+        let Attendance = await axios.post(`api/addAttendance/`, attendance);
+        console.log(Attendance);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const getAttendance = () => async (dispatch) => {
+    try {
+        let allAttendance = await axios.get("/api/allAttendance");
+        dispatch({ type: GET_ATTENDANCE, payload: allAttendance.data });
     } catch (err) {
         console.log(err);
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 // import timeGridPlugin from "@fullcalendar/timegrid";
@@ -6,7 +6,26 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 // import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    getLeave,
+    get_Department,
+    get_Employees,
+} from "../../redux/actions/Employee";
 const Dashboard = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getLeave());
+        dispatch(get_Department());
+        dispatch(get_Employees());
+    }, []);
+    const { Leaves, Department, Employees } = useSelector(
+        (state) => state.managementReducer
+    );
+    var PendingLeaves = Leaves.filter((el) => el.Decision == "Pending");
+    var reverseLeaves = [...PendingLeaves].reverse();
+
     return (
         <div class="page-container">
             {" "}
@@ -34,7 +53,9 @@ const Dashboard = () => {
                                     <i class="fa fa-users"></i>
                                 </div>
                                 <div class="details">
-                                    <div class="number count">9</div>
+                                    <div class="number count">
+                                        {Employees.length}
+                                    </div>
                                     <div class="desc">Total Employees</div>
                                 </div>
                                 <a class="more">
@@ -50,7 +71,9 @@ const Dashboard = () => {
                                     <i class="fa fa-briefcase"></i>
                                 </div>
                                 <div class="details">
-                                    <div class="number count">4</div>
+                                    <div class="number count">
+                                        {Department.length}
+                                    </div>
                                     <div class="desc">Total Departments</div>
                                 </div>
                                 <a class="more">
@@ -66,8 +89,10 @@ const Dashboard = () => {
                                     <i class="fa fa-shopping-cart"></i>
                                 </div>
                                 <div class="details">
-                                    <div class="number count">8</div>
-                                    <div class="desc">Total Awards</div>
+                                    <div class="number count">
+                                        {PendingLeaves.length}
+                                    </div>
+                                    <div class="desc">Total Leave</div>
                                 </div>
                                 <a class="more">
                                     View More{" "}
@@ -78,7 +103,7 @@ const Dashboard = () => {
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        {/*<div class="col-md-6">
                             <div class="portlet light bordered">
                                 <div class="portlet-title">
                                     <div class="caption font-red">
@@ -86,21 +111,21 @@ const Dashboard = () => {
                                         Attendance
                                     </div>
                                 </div>
-                                <div class="portlet-body">
-                                    <FullCalendar
-                                        defaultView="dayGridMonth"
-                                        header={{
-                                            left: "prev,next",
-                                            center: "title",
-                                            right: "dayGridMonth,timeGridWeek,timeGridDay",
-                                        }}
-                                        themeSystem="Simplex"
-                                        plugins={[dayGridPlugin]}
-                                        events={[]}
+                                  <div class="portlet-body">
+                                     <FullCalendar
+                                         defaultView="dayGridMonth"
+                                         header={{
+                                             left: "prev,next",
+                                             center: "title",
+                                             right: "dayGridMonth,timeGridWeek,timeGridDay",
+                                         }}
+                                         themeSystem="Simplex"
+                                         plugins={[dayGridPlugin]}
+                                         events={[]}
                                     />
-                                </div>
+                                 </div> 
                             </div>
-                        </div>
+                                        </div>*/}
                         <div class="col-md-6">
                             <div class="portlet light bordered">
                                 <div class="portlet-title">
@@ -115,8 +140,16 @@ const Dashboard = () => {
                                             width: "100%",
                                             height: "400px",
                                             margin: "0 auto",
+                                            overflow: "auto",
                                         }}
-                                    ></div>
+                                    >
+                                        {reverseLeaves.length > 0 &&
+                                            reverseLeaves.map((el) => {
+                                                return (
+                                                    <p>{`The Employee ${el.Employee.Name} ${el.Employee.lastName} send a new Leave Request `}</p>
+                                                );
+                                            })}
+                                    </div>
                                 </div>
                             </div>
                         </div>

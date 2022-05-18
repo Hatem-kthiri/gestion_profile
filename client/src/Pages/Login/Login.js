@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { employee_login } from "../../redux/actions/user";
+import { employee_login, admin_login } from "../../redux/actions/user";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 const Login = () => {
@@ -33,6 +33,15 @@ const Login = () => {
     const handleSubmit = () => {
         dispatch(employee_login(login, history));
     };
+    const [adminLogin, setAdminLogin] = useState({});
+
+    // const adminChange = (e) => {
+    //     setAdminLogin({ ...adminLogin, [e.target.name]: e.target.value });
+    // };
+    const adminSubmit = () => {
+        dispatch(admin_login(login, history));
+    };
+
     return (
         <div class="container">
             <div class="reg-block">
@@ -234,10 +243,7 @@ const Login = () => {
                         </div>
 
                         <div class="tab-pane fade in" id="manager">
-                            <form
-                                class="login-form-admin"
-                                id="login-form-admin"
-                            >
+                            <div class="login-form-admin" id="login-form-admin">
                                 <input name="_token" type="hidden" />
                                 <div class="form-group rem margin-bottom-20">
                                     <div>
@@ -251,7 +257,7 @@ const Login = () => {
                                                 name="email"
                                                 id="email"
                                                 placeholder="Email"
-                                                required
+                                                onChange={handleChange}
                                             />
                                         </div>
                                     </div>
@@ -268,7 +274,7 @@ const Login = () => {
                                                 name="password"
                                                 id="password"
                                                 placeholder="Password"
-                                                required
+                                                onChange={handleChange}
                                             />
                                         </div>
                                     </div>
@@ -288,6 +294,7 @@ const Login = () => {
                                             type="submit"
                                             class="btn-u btn-block input-group"
                                             id="submitbuttonAdmin"
+                                            onClick={adminSubmit}
                                         >
                                             Login
                                         </button>
@@ -307,7 +314,7 @@ const Login = () => {
                                         front.ToResetYourPassword
                                     </p>
                                 </div>
-                            </form>
+                            </div>
                             {/* <div
                             <h3 class="box-title">Demo account login by</h3>
                                 class="table-responsive"
