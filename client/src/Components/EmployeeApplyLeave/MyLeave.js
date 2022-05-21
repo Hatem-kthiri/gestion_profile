@@ -15,8 +15,9 @@ const MyLeave = () => {
 
     var id = jwt_decode(localStorage.getItem("token")).user._id;
     var LeavesReversed = [...Leaves].reverse();
+    var ValidEmployee = LeavesReversed.filter((el) => el.Employee !== null);
 
-    var myLeaves = LeavesReversed.filter((el) => el.Employee._id == id);
+    var myLeaves = ValidEmployee.filter((el) => el.Employee._id == id);
     return (
         <div class="page-container">
             <div class="page-content-wrapper">

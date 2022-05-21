@@ -77,7 +77,11 @@ router.post("/addLeave", async (req, res) => {
             Reason,
             Employee,
         });
-        res.status(201).json({ message: "leave created ", data: newLeave });
+        res.status(201).json({
+            status: true,
+            message: "leave created ",
+            data: newLeave,
+        });
     } catch (err) {
         res.status(500).json({ message: err });
     }
@@ -125,6 +129,34 @@ router.get("/allAttendance", async (req, res) => {
         res.status(200).json({
             message: "all Attendance",
             data: allAttendance,
+        });
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+});
+router.put("/adminUpdateEmployee/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(req.body);
+        const updateEmployee = await User.findByIdAndUpdate(id, {
+            ...req.body,
+        });
+        res.status(200).json({
+            message: "Employee updated",
+            data: updateEmployee,
+        });
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+});
+
+router.delete("/deleteEmployee/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteEmployee = await User.findByIdAndDelete(id);
+        res.status(200).json({
+            message: "Employee Deleted",
+            data: deleteEmployee,
         });
     } catch (err) {
         res.status(500).json({ message: err });

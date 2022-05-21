@@ -23,7 +23,8 @@ const Dashboard = () => {
     const { Leaves, Department, Employees } = useSelector(
         (state) => state.managementReducer
     );
-    var PendingLeaves = Leaves.filter((el) => el.Decision == "Pending");
+    var Employee = Leaves.filter((el) => el.Employee !== null);
+    var PendingLeaves = Employee.filter((el) => el.Decision == "Pending");
     var reverseLeaves = [...PendingLeaves].reverse();
 
     return (
@@ -143,12 +144,15 @@ const Dashboard = () => {
                                             overflow: "auto",
                                         }}
                                     >
-                                        {reverseLeaves.length > 0 &&
+                                        {reverseLeaves.length > 0 ? (
                                             reverseLeaves.map((el) => {
                                                 return (
                                                     <p>{`The Employee ${el.Employee.Name} ${el.Employee.lastName} send a new Leave Request `}</p>
                                                 );
-                                            })}
+                                            })
+                                        ) : (
+                                            <p>Waiting for new Leaves ..</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>

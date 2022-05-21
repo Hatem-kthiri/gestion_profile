@@ -10,7 +10,8 @@ const MyAttendance = () => {
     var id = jwt_decode(localStorage.getItem("token")).user._id;
 
     const { Attendance } = useSelector((state) => state.managementReducer);
-    var MyAttendance = Attendance.filter((el) => el.Employee._id == id);
+    var ValidEmployee = Attendance.filter((el) => el.Employee !== null);
+    var MyAttendance = ValidEmployee.filter((el) => el.Employee._id == id);
 
     return (
         <div class="page-container">

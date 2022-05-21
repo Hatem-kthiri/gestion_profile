@@ -5,6 +5,7 @@ import {
     GET_ATTENDANCE,
 } from "../constants/actions-types";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export const get_Employees = () => async (dispatch) => {
     try {
@@ -14,7 +15,16 @@ export const get_Employees = () => async (dispatch) => {
         console.log(error);
     }
 };
-
+export const delete_employee = (id) => async (dispatch) => {
+    try {
+        console.log(id);
+        let result = await axios.delete(`api/deleteEmployee/${id}`);
+        console.log(result.data);
+        dispatch(get_Employees());
+    } catch (error) {
+        console.log(error);
+    }
+};
 export const get_Department = () => async (dispatch) => {
     try {
         let department = await axios.get("api/getDepartment");
@@ -47,10 +57,13 @@ export const getLeave = () => async (dispatch) => {
     }
 };
 export const addLeave = (newLeave) => async (dispatch) => {
+    const history = useHistory();
     try {
         let new_Leave = await axios.post("api/addLeave", newLeave);
-        console.log(new_Leave);
-        dispatch(getLeave());
+        if (new_Leave.status) {
+            dispatch(getLeave());
+            history.push("/EmployeeMyLeave");
+        }
     } catch (err) {
         console.log(err);
     }
@@ -83,6 +96,18 @@ export const getAttendance = () => async (dispatch) => {
     try {
         let allAttendance = await axios.get("/api/allAttendance");
         dispatch({ type: GET_ATTENDANCE, payload: allAttendance.data });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const AdminuUpdateEmployee = (update) => async (dispatch) => {
+    try {
+        let updateEmployee = await axios.put(
+            `/api/adminUpdateEmployee/${update.id}`,
+            update.updateEmployee
+        );
+        dispatch(get_Employees());
     } catch (err) {
         console.log(err);
     }

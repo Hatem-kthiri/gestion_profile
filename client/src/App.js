@@ -30,68 +30,143 @@ function App() {
             setUserLogged(jwt_decode(localStorage.getItem("token")).user.role);
         }
     }, [isLoggedIn()]);
-
+    console.log(userLogged);
     return (
         <div>
             <Switch>
                 <Route exact path="/">
-                    {isLoggedIn() == false ? <Login /> : null}
+                    {isLoggedIn() == false ? (
+                        <Redirect to="/login" />
+                    ) : userLogged && userLogged == "admin" ? (
+                        <Redirect to="dashboardA" />
+                    ) : userLogged == "Employee" ? (
+                        <Redirect to="dashboardE" />
+                    ) : null}
                 </Route>
                 <Route path="/login">
-                    <Login />
+                    {userLogged && userLogged == "admin" ? (
+                        <Redirect to="dashboardA" />
+                    ) : userLogged == "Employee" ? (
+                        <Redirect to="dashboardE" />
+                    ) : (
+                        <Login />
+                    )}
                 </Route>
                 <Route path="/adminDepartment">
-                    <Navigation />
-                    <Department />
+                    {userLogged && userLogged == "admin" ? (
+                        <>
+                            <Navigation />
+                            <Department />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
                 </Route>
                 <Route path="/adminEmployee">
-                    <Navigation />
-                    <Employee />
+                    {userLogged && userLogged == "admin" ? (
+                        <>
+                            <Navigation />
+                            <Employee />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
                 </Route>
                 <Route path="/adminAddEmployee">
-                    <Navigation />
-                    <AddEmployee />
+                    {userLogged && userLogged == "admin" ? (
+                        <>
+                            <Navigation />
+                            <AddEmployee />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
                 </Route>
                 <Route path="/adminViewAttendance">
-                    <Navigation />
-                    <ViewAttendance />
-                </Route>
-                <Route path="/EmployeeApplyLeave">
-                    <EmployeeNavigation />
-                    <Leave />
-                </Route>
-                <Route path="/EmployeemyLeave">
-                    <EmployeeNavigation />
-                    <MyLeave />
+                    {userLogged && userLogged == "admin" ? (
+                        <>
+                            <Navigation />
+                            <ViewAttendance />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
                 </Route>
                 <Route path="/AdminLeaveList">
-                    <Navigation />
-                    <LeaveList />
+                    {userLogged && userLogged == "admin" ? (
+                        <>
+                            <Navigation />
+                            <LeaveList />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
                 </Route>
                 <Route path="/AdminMarkAttendance">
-                    <Navigation />
-                    <MarkAttendance />
+                    {userLogged && userLogged == "admin" ? (
+                        <>
+                            <Navigation />
+                            <MarkAttendance />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
                 </Route>
+                <Route path="/EmployeeApplyLeave">
+                    {userLogged && userLogged == "Employee" ? (
+                        <>
+                            <EmployeeNavigation />
+                            <Leave />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
+                </Route>
+                <Route path="/EmployeemyLeave">
+                    {userLogged && userLogged == "Employee" ? (
+                        <>
+                            <EmployeeNavigation />
+                            <MyLeave />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
+                </Route>
+
                 <Route path="/EmployeeMyAttendance">
-                    <EmployeeNavigation />
-                    <MyAttendance />
+                    {userLogged && userLogged == "Employee" ? (
+                        <>
+                            <EmployeeNavigation />
+                            <MyAttendance />
+                        </>
+                    ) : (
+                        <Redirect to="/" />
+                    )}
                 </Route>
                 {isLoggedIn() ? (
                     <Route exact path="/dashboardE">
-                        <>
-                            <EmployeeNavigation />
-                            <DashboardE />
-                        </>
+                        {userLogged && userLogged == "Employee" ? (
+                            <>
+                                <EmployeeNavigation />
+                                <DashboardE />
+                            </>
+                        ) : (
+                            <Redirect to="/" />
+                        )}
                     </Route>
                 ) : (
                     <Redirect to="/login" />
                 )}
                 {isLoggedIn() ? (
                     <Route exact path="/dashboardA">
-                        <>
-                            <Navigation />
-                            <Dashboard />
-                        </>
+                        {userLogged && userLogged == "admin" ? (
+                            <>
+                                <Navigation />
+                                <Dashboard />
+                            </>
+                        ) : (
+                            <Redirect to="/" />
+                        )}
                     </Route>
                 ) : (
                     <Redirect to="/login" />

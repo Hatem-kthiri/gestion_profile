@@ -5,6 +5,7 @@ const EmployeeNavigation = () => {
     const logOut = () => {
         localStorage.removeItem("token");
         history.push("/login");
+        history.go(0);
     };
     return (
         <div class="header">
@@ -97,7 +98,7 @@ const EmployeeNavigation = () => {
                                     class="dropdown-menu"
                                     style={{ transform: "translateY(-12px)" }}
                                 >
-                                    <li>
+                                    {/* <li>
                                         <a
                                             href=""
                                             data-toggle="modal"
@@ -107,7 +108,7 @@ const EmployeeNavigation = () => {
                                             {" "}
                                             Change Password
                                         </a>
-                                    </li>
+                                    </li> */}
                                     <li>
                                         <a onClick={() => logOut()}>Logout</a>
                                     </li>

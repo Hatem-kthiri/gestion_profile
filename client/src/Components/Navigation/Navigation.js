@@ -6,6 +6,7 @@ const Navigation = () => {
     const logOut = () => {
         localStorage.removeItem("token");
         history.push("/login");
+        history.go(0);
     };
     return (
         <div class="page-header navbar navbar-fixed-top">
