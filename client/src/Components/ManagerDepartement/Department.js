@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { get_Department, add_Department } from "../../redux/actions/Employee";
+import {
+    get_Department,
+    add_Department,
+    AdminDeleteDepartment,
+} from "../../redux/actions/Employee";
 const Department = () => {
     const dispatch = useDispatch();
     useEffect(() => {
@@ -21,6 +25,9 @@ const Department = () => {
     };
     const handleAddDepartment = () => {
         dispatch(add_Department(newDepartment));
+    };
+    const handleDelete = (id) => {
+        dispatch(AdminDeleteDepartment(id));
     };
     return (
         <div class="page-container">
@@ -85,7 +92,11 @@ const Department = () => {
                                                                             style={{
                                                                                 width: "94px",
                                                                             }}
-                                                                            href=""
+                                                                            onClick={() =>
+                                                                                handleDelete(
+                                                                                    el._id
+                                                                                )
+                                                                            }
                                                                         >
                                                                             <i class="fa fa-trash"></i>{" "}
                                                                             Delete
@@ -124,7 +135,14 @@ const Department = () => {
                                     ></button>
                                     <h4 class="modal-title">Add Department</h4>
                                 </div>
-                                <div class="modal-body" id="info">
+                                <div
+                                    class="modal-body"
+                                    id="info"
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                    }}
+                                >
                                     <label style={{ marginRight: "10px" }}>
                                         Department Name:{" "}
                                     </label>
@@ -137,6 +155,7 @@ const Department = () => {
                                         }}
                                         type="text"
                                         name="Name"
+                                        class="form-control"
                                         placeholder="Department Name ..."
                                         onChange={handleChange}
                                     />
@@ -145,10 +164,18 @@ const Department = () => {
                                     <button
                                         type="button"
                                         data-dismiss="modal"
-                                        class="btn dark btn-outline"
+                                        class="btn purple btn-sm margin-bottom-10 "
                                         onClick={handleAddDepartment}
                                     >
                                         Submit
+                                    </button>
+                                    <button
+                                        type="button"
+                                        data-dismiss="modal"
+                                        class="btn purple btn-sm margin-bottom-10 "
+                                        onClick={() => setShow(false)}
+                                    >
+                                        Cancel
                                     </button>
                                 </div>
                             </div>

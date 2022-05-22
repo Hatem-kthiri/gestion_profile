@@ -39,6 +39,7 @@ const jwt = require("jsonwebtoken");
 
 const isAuth = (req, res, next) => {
     const token = req.header("authorization");
+
     if (!token)
         return res
             .status(401)

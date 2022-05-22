@@ -18,7 +18,8 @@ const LeaveList = () => {
     const handleSubmit = (id) => {
         dispatch(updateDecision({ id, Decision }));
     };
-    var LeavesReversed = [...Leaves].reverse();
+    var ValidEmployee = Leaves.filter((el) => el.Employee !== null);
+    var LeavesReversed = [...ValidEmployee].reverse();
 
     return (
         <div class="page-container">

@@ -61,11 +61,11 @@ const Navigation = () => {
                                     <i class="fa fa-angle-down"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-default">
-                                    <li>
+                                    {/* <li>
                                         <a href="#">
                                             <i class="icon-user"></i> My Profile
                                         </a>
-                                    </li>
+                                    </li> */}
 
                                     <li class="divider"></li>
 
@@ -121,56 +121,6 @@ const Navigation = () => {
                                 </ul>
                             </li>
 
-                            {/* <li class="menu-dropdown classic-menu-dropdown ">
-                                <a href=" ">
-                                    <i class="icon-briefcase"></i> HR
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-left">
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-trophy"></i>
-                                            <span class="title">Awards</span>
-                                            <span class="selected"></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-money"></i>
-                                            <span class="title">Expenses</span>
-                                            <span class="selected"></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-send"></i>
-                                            <span class="title">Holidays</span>
-                                            <span class="selected"></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            &nbsp; ₹ &nbsp;
-                                            <span class="title">Payroll</span>
-                                            <span class="selected "></span>
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href="">
-                                            <i class="fa fa-quote-left"></i>
-                                            <span class="title">
-                                                Notice Board
-                                            </span>
-                                            <span class="selected "></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li> */}
-
                             <li class="menu-dropdown classic-menu-dropdown ">
                                 <a
                                     href="javascript:;"
@@ -206,7 +156,7 @@ const Navigation = () => {
                                         </a>
                                     </li> */}
 
-                                    <li class="nav-item ">
+                                    {/* <li class="nav-item ">
                                         <Link
                                             class="nav-link"
                                             to="/AdminLeaveList"
@@ -217,93 +167,19 @@ const Navigation = () => {
                                             </span>
                                             <span class="selected "></span>
                                         </Link>
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </li>
 
-                            {/* <li class="menu-dropdown classic-menu-dropdown ">
-                                <a
-                                    href="javascript:;"
+                            <li class="menu-dropdown  ">
+                                <Link
+                                    to="/AdminLeaveList"
                                     class="nav-link nav-toggle"
                                 >
-                                    <i class="icon-graduation"></i>
-                                    <span class="title">Recruitment</span>
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-ticket"></i>
-                                            Job Openings
-                                        </a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-file-text-o"></i>
-                                            Job Applications
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li> */}
-
-                            <li class="menu-dropdown classic-menu-dropdown ">
-                                <a
-                                    href="javascript:;"
-                                    class="nav-link nav-toggle"
-                                >
-                                    <i class="icon-settings"></i>
-                                    <span class="title">Settings</span>
-                                    <i class="fa fa-angle-down"></i>
-                                </a>
-                                <ul class="dropdown-menu pull-left">
-                                    {/* <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-dollar"></i>
-                                            Billing
-                                        </a>
-                                    </li> */}
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa  fa-cog"></i>
-                                            General Settings
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-user"></i>
-                                            Profile Settings
-                                        </a>
-                                    </li>
-
-                                    {/* <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-bell"></i>
-                                            Notification Settings
-                                        </a>
-                                    </li> */}
-
-                                    {/* <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="icon-diamond"></i>
-                                            Theme Settings
-                                        </a>
-                                    </li> */}
-
-                                    {/* <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="fa fa-gears"></i>
-                                            Attendance Settings
-                                        </a>
-                                    </li> */}
-
-                                    {/* <li class="nav-item ">
-                                        <a class="nav-link" href=" ">
-                                            <i class="icon-users"></i>
-                                            Admin Users
-                                        </a>
-                                    </li> */}
-                                </ul>
+                                    <i class="fa fa-rocket"></i>
+                                    <span class="title">Leave List</span>
+                                    {/* <i class="fa fa-angle-down"></i> */}
+                                </Link>
                             </li>
                         </ul>
                     </div>

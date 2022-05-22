@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-
+import { useDispatch } from "react-redux";
+import { updateProfileEmployee } from "../../redux/actions/Employee";
 const DashboardE = () => {
     const [userLogged, setUserLogged] = useState({});
-
+    const dispatch = useDispatch();
     useEffect(() => {
         setUserLogged(jwt_decode(localStorage.getItem("token")).user);
     }, []);
@@ -12,6 +13,22 @@ const DashboardE = () => {
     setTimeout(() => {
         setCreationDate(userLogged.creationDate.substr(0, 10));
     }, 2000);
+    const [modify, setModify] = useState(false);
+    const [updateProfile, setUpdateProfile] = useState({});
+    const handleChange = (e) => {
+        setUpdateProfile({ ...updateProfile, [e.target.name]: e.target.value });
+    };
+    const handleModify = () => {
+        setModify(true);
+    };
+    const handleUpdate = () => {
+        setUserLogged({ ...userLogged, ...updateProfile });
+        dispatch(
+            updateProfileEmployee({ id: userLogged._id, update: updateProfile })
+        );
+        setModify(false);
+    };
+
     return (
         <div class="wrapper">
             <div class="profile container content">
@@ -105,6 +122,16 @@ const DashboardE = () => {
                                                 <i class="fa fa-user"></i>
                                                 Personal Details
                                             </h2>
+                                            <i
+                                                class="fa fa-pencil"
+                                                onClick={handleModify}
+                                                style={{
+                                                    color: "#000",
+                                                    cursor: "pointer",
+                                                    transform:
+                                                        "translateX(250px) scale(1.2)",
+                                                }}
+                                            ></i>
                                         </div>
                                         <div class="panel-body panelHolder">
                                             <table class="table table-light margin-bottom-0">
@@ -116,10 +143,22 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            {`${
-                                                                userLogged &&
-                                                                userLogged.Name
-                                                            } `}
+                                                            {modify ? (
+                                                                <input
+                                                                    onChange={
+                                                                        handleChange
+                                                                    }
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    name="Name"
+                                                                    placeholder="Name"
+                                                                />
+                                                            ) : (
+                                                                `${
+                                                                    userLogged &&
+                                                                    userLogged.Name
+                                                                } `
+                                                            )}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -128,10 +167,25 @@ const DashboardE = () => {
                                                                 Last Name
                                                             </span>
                                                         </td>
-                                                        <td>{`${
-                                                            userLogged &&
-                                                            userLogged.lastName
-                                                        }`}</td>
+                                                        <td>
+                                                            {" "}
+                                                            {modify ? (
+                                                                <input
+                                                                    onChange={
+                                                                        handleChange
+                                                                    }
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    name="lastName"
+                                                                    placeholder="Last Name"
+                                                                />
+                                                            ) : (
+                                                                `${
+                                                                    userLogged &&
+                                                                    userLogged.lastName
+                                                                }`
+                                                            )}
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>
@@ -140,8 +194,20 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            {userLogged &&
-                                                                userLogged.DateOfBirth}
+                                                            {modify ? (
+                                                                <input
+                                                                    onChange={
+                                                                        handleChange
+                                                                    }
+                                                                    type="date"
+                                                                    class="form-control"
+                                                                    name="DateOfBirth"
+                                                                    readonly
+                                                                />
+                                                            ) : (
+                                                                userLogged &&
+                                                                userLogged.DateOfBirth
+                                                            )}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -151,8 +217,27 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            {userLogged &&
-                                                                userLogged.gender}
+                                                            {modify ? (
+                                                                <div class="col-md-9">
+                                                                    <select
+                                                                        class="form-control"
+                                                                        name="gender"
+                                                                        onChange={
+                                                                            handleChange
+                                                                        }
+                                                                    >
+                                                                        <option value="male">
+                                                                            Male
+                                                                        </option>
+                                                                        <option value="female">
+                                                                            Female
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            ) : (
+                                                                userLogged &&
+                                                                userLogged.gender
+                                                            )}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -173,8 +258,22 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            {userLogged &&
-                                                                userLogged.phone}
+                                                            {modify ? (
+                                                                <div class="col-md-9">
+                                                                    <input
+                                                                        onChange={
+                                                                            handleChange
+                                                                        }
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        name="phone"
+                                                                        placeholder="Phone"
+                                                                    />
+                                                                </div>
+                                                            ) : (
+                                                                userLogged &&
+                                                                userLogged.phone
+                                                            )}
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -184,10 +283,35 @@ const DashboardE = () => {
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            {userLogged &&
-                                                                userLogged.address}
+                                                            {modify ? (
+                                                                <div class="col-md-9">
+                                                                    <textarea
+                                                                        onChange={
+                                                                            handleChange
+                                                                        }
+                                                                        class="form-control"
+                                                                        name="address"
+                                                                        rows="3"
+                                                                    ></textarea>
+                                                                </div>
+                                                            ) : (
+                                                                userLogged &&
+                                                                userLogged.address
+                                                            )}
                                                         </td>
                                                     </tr>
+                                                    {modify ? (
+                                                        <button
+                                                            type="button"
+                                                            data-dismiss="modal"
+                                                            class="btn purple btn-sm margin-bottom-10 "
+                                                            onClick={
+                                                                handleUpdate
+                                                            }
+                                                        >
+                                                            Submit
+                                                        </button>
+                                                    ) : null}
                                                     {/* <tr>
                                                         <td>
                                                             <span class="primary-link">

@@ -3,9 +3,11 @@ import {
     GET_DEPARTMENT,
     GET_LEAVE,
     GET_ATTENDANCE,
+    GET_CURRENT,
 } from "../constants/actions-types";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Employee from "../../Components/ManagerEmployee/Employee";
 
 export const get_Employees = () => async (dispatch) => {
     try {
@@ -108,6 +110,39 @@ export const AdminuUpdateEmployee = (update) => async (dispatch) => {
             update.updateEmployee
         );
         dispatch(get_Employees());
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const AdminDeleteDepartment = (id) => async (dispatch) => {
+    try {
+        let deleteDepartment = await axios.delete(
+            `api/adminDeleteDepartment/${id}`
+        );
+        console.log(deleteDepartment);
+        dispatch(get_Department());
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updateProfileEmployee = (Employee) => async (dispatch) => {
+    try {
+        let updateProfile = await axios.put(
+            `/api/EmployeeUpdateProfile/${Employee.id}`,
+            Employee.update
+        );
+        console.log(updateProfile);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const getCurrentEmployee = (id) => async (dispatch) => {
+    try {
+        let employee = await axios.get(`/api/CurrentEmployee/${id}`);
+        dispatch({ type: GET_CURRENT, payload: employee.data });
     } catch (err) {
         console.log(err);
     }

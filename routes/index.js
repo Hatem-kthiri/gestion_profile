@@ -162,4 +162,42 @@ router.delete("/deleteEmployee/:id", async (req, res) => {
         res.status(500).json({ message: err });
     }
 });
+
+router.delete("/adminDeleteDepartment/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteDepartment = await Department.findByIdAndDelete(id);
+        res.status(200).json({
+            message: "Department Deleted",
+            data: deleteDepartment,
+        });
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+});
+router.put("/EmployeeUpdateProfile/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateProfile = await User.findByIdAndUpdate(id, { ...req.body });
+        res.status(200).json({
+            message: "Profile updated",
+            data: updateProfile,
+        });
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+});
+router.get("/CurrentEmployee/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+        const current = await User.findById(id);
+        res.status(200).json({
+            message: "Current Employee",
+            data: current,
+        });
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
+});
 module.exports = router;

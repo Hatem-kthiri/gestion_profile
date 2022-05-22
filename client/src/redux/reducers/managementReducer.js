@@ -3,12 +3,14 @@ import {
     GET_DEPARTMENT,
     GET_LEAVE,
     GET_ATTENDANCE,
+    GET_CURRENT,
 } from "../constants/actions-types";
 const initialState = {
     Employees: [],
     Department: [],
     Leaves: [],
     Attendance: [],
+    Current: {},
 };
 
 const managementReducer = (state = initialState, action) => {
@@ -22,6 +24,8 @@ const managementReducer = (state = initialState, action) => {
             return { ...state, Leaves: payload.data };
         case GET_ATTENDANCE:
             return { ...state, Attendance: payload.data };
+        case GET_CURRENT:
+            return { ...state, Curent: payload.data };
         default:
             return state;
     }

@@ -10,8 +10,9 @@ const ViewAttendance = () => {
         dispatch(getAttendance());
     }, []);
     const { Attendance } = useSelector((state) => state.managementReducer);
-
-    var AttendanceRows = Attendance.map((el) => {
+    var validEmployee = Attendance.filter((el) => el.Employee !== null);
+    var reversedEmployee = [...validEmployee].reverse();
+    var AttendanceRows = reversedEmployee.map((el) => {
         const data = {
             name: `${el.Employee.Name} ${el.Employee.lastName}`,
             date: `${el.date}`,
